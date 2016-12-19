@@ -1,23 +1,104 @@
+
 body {
   margin: 0 auto;
   text-align: center;
+  font-family: roboto;
+  font-weight: 400;
+}
+
+h1 {
+  font-family: lato;
+  font-weight: 300;
+  margin: 40px auto 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #aaaaaa;
+  max-width: 300px
 }
 
 #input-area {
   margin-bottom: 25px;
+  display: inline-flex;
+}
+
+input {
+  text-align: center;
+}
+
+#add-item-button {
+  height: 30px;
+  width: 30px;
+  background: url("/img/icons.png") -7px -19px;
+}
+
+#add-item-button:hover {
+  height: 30px;
+  width: 30px;
+  background: url("/img/icons.png") -74px -19px;
 }
 
 table {
   margin: 0 auto;
-  /*border: 2px solid black;*/
+  font-size: 17px;
 }
 
 td {
+  margin: 4px;
   padding: 5px;
   text-align: left;
-  border: 2px solid black;
+}
+
+.delete {
+  width: 35px;
+  height: 35px;
+  background: url("/img/icons.png") -13px 64px;
+}
+
+.delete:hover {
+  width: 35px;
+  height: 35px;
+  background: url("/img/icons.png") -80px 64px;
+}
+
+.ensureDelete {
+  border: none;
+  border-radius: 3px;
+  padding: 8px 8px;
+  position: absolute;
+  background-color: red;
+  color: white;
+  transition: .4s;
+}
+
+.item {
+  border: 5px solid white;
+  background-color: #eeeeee;
+  padding: 5px 25px;
+}
+
+.toComplete {
+  width: 35px;
+  height: 35px;
+  background: url("/img/icons.png") -130px 64px;
+}
+
+.toComplete:hover {
+  width: 35px;
+  height: 35px;
+  background: url("/img/icons.png") -196px 64px;
 }
 
 .completed {
-  background-color: tan;
+  width: 35px;
+  height: 35px;
+  background: url("/img/icons.png") -263px 64px;
+}
+
+.completed:hover {
+  width: 35px;
+  height: 35px;
+  background: url("/img/icons.png") -196px 64px;
+}
+
+.completed + .item {
+   background-color: #aad1f5;
 }

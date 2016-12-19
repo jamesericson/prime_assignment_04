@@ -43,7 +43,7 @@ app.get('/getList', function(req, res){
       console.log(err);
     } else {
       console.log('connected to DB');
-      var query = client.query( 'SELECT item FROM todolist' );
+      var query = client.query( 'SELECT * FROM todolist ORDER BY completed, id' );
       //array for list
       var allList = [];
       query.on( 'row', function( row ){
@@ -58,3 +58,45 @@ app.get('/getList', function(req, res){
     } // end if else
   }); // end connect
 }); //end get getlist
+
+app.post('/updateStatus', function(req, res){
+  console.log('hit updateStatus route/ recieved id: ', req.body.id);
+  //cont to DB
+  pg.connect( connectionString, function(err, client, done){
+    if( err ){
+      console.log(err);
+    } else {
+      console.log('connected to DB');
+      // use wildcards to insert record
+      var query = client.query( 'Select completed FROM todolist WHERE id = ' + [req.body.id] + ';' );
+      query.on('row',  function (row){
+        console.log('this is the what it\'s checking: ', row.completed);
+        if(row.completed == true){
+          console.log('it was true... now it should be false');
+          client.query( 'UPDATE todolist SET completed=FALSE WHERE id= ' + [req.body.id] + ';' );
+        } else {
+          console.log('it was else... ?');
+          client.query( 'UPDATE todolist SET completed=TRUE WHERE id= ' + [req.body.id] + ';' );
+        } // end nested if else
+        done();
+        res.send('ok');
+      }); // end query.on
+    }//end if else
+  });// end connect
+});//end post newItem
+
+app.post('/delete', function(req, res){
+  console.log('hit delete route/ recieved id: ', req.body.id);
+  //cont to DB
+  pg.connect( connectionString, function(err, client, done){
+    if( err ){
+      console.log(err);
+    } else {
+      console.log('connected to DB');
+      // use wildcards to insert record
+      client.query( 'DELETE FROM todolist WHERE id=' + [req.body.id] + ';' );
+      done();
+      res.send('ok');
+    }//end if else
+  });// end connect
+});//end post newItem

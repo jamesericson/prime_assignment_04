@@ -7,8 +7,12 @@ $(document).ready(function(){
 function init(){
   updateList();
   $('#add-item-button').on('click', addItem);
+
+  $(document).on('click', '.ensureDelete', deleteItem);
+
   $(document).keypress(function(e){if(e.which == 13){addItem();} });
-  $(document).on('click', '.completed-button', selectComplete);
+  $(document).on('click', '.completed-button', changeComplete);
+  $(document).on('click', '.delete-button', askDelete)
 } // end init()
 
 function addItem(){
@@ -38,12 +42,14 @@ function updateList(){
     success: (function(response){
       console.log('back from server', response);
       var outputText = '<table>'
-      // <tr><td></td><td>check complete</td><td>delete</td></tr>
       for (var i = 0; i < response.length; i++) {
-        outputText += '<tr><td>'+ response[i].item +'</td><td class="completed-button" >complete?</td><td>delete</td></tr>';
+        outputText += '<tr data=' + response[i].id + ' ><td class=" completed-button ';
+        if (response[i].completed){outputText += ' completed"';} else { outputText += ' toComplete"';}
+        outputText += ' ></td><td class="item" >'+ response[i].item +'</td><td class="ensureDelete">[ Delete? ]</td><td class="delete-button delete" ></td></tr>';
       }
       outputText += '</table>';
       $('#todoList').html(outputText);
+        $('.ensureDelete').hide();
     }),
     error: (function(err){
       console.log(err);
@@ -51,7 +57,54 @@ function updateList(){
   });//end ajax
 } //end updateList()
 
-function selectComplete(){
-  console.log('in selectComplete');
-  $(this).parent().addClass('completed');
+function changeComplete(){
+  console.log('in changeComplete');
+
+  $.ajax({
+    type: 'POST',
+    url: '/updateStatus',
+    data: send = {
+        id: $(this).parent().attr('data')
+      },
+    success: (function(response){
+      console.log('back from server', response);
+      updateList();
+    }),
+    error: (function(err){
+      console.log(err);
+    })
+  });//end ajax
 } // end selectComplete()
+
+function askDelete(){
+  console.log('in askDelete an item');
+  address = this;
+  $('.delete').removeClass('delete-button');
+  $(this).parent().find('.ensureDelete').slideToggle();
+  // $(this).text('Are you sure?');
+
+  $(document).one('click', function(){
+    $('.delete').addClass('delete-button')
+    $(address).parent().find('.ensureDelete').slideToggle();
+
+    });
+}// end askDelete()
+
+function deleteItem(){
+  console.log('in deleteItem');
+  $.ajax({
+    type: 'POST',
+    url: '/delete',
+    data: send = {
+        id: $(this).parent().attr('data')
+      },
+    success: (function(response){
+      console.log('back from server', response);
+      updateList();
+    }),
+    error: (function(err){
+      console.log(err);
+    })
+  });//end ajax
+
+} // end deleteItem()
