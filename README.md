@@ -1,11 +1,12 @@
 To Do list
 
-(tech used: HTML, CSS, JAVASCRIPT, JQUERY, NODE JS,  SEQUEL) 
+(tech used: HTML, CSS, JAVASCRIPT, JQUERY, NODE JS,  SEQUEL)
 
-App solves that age old problem of "what are all of the things that needs to be done;" and better yet "what are the things that I already completed" (there is nothing better feeling than checking something off a list).  Here users can create a list of todos, check items off (or uncheck items), and delete items off of the list. App connects to a local database (which will need to be set up with the .sql file).  
+App solves that age old problem of "what are all of the things that needs to be done;" and better yet "what are the things that I already completed" (there is no better feeling than checking something off a list).  Here users can create a list of todos, check items off (or uncheck items), and delete items off of the list. App connects to a local database (which will need to be set up with the .sql file).  
 
 
-Completed in accordance with a project at Prime Digital Acadamy
+Completed in accordance with a project at Prime Digital Academy...
+
 Weekend Challenge 4: The To Do List
 
 Hello Primers!
