@@ -73,6 +73,7 @@ td {
   border: 5px solid white;
   background-color: #eeeeee;
   padding: 5px 25px;
+  line-height: 30px;
 }
 
 .toComplete {
@@ -101,4 +102,21 @@ td {
 
 .completed + .item {
    background-color: #aad1f5;
+}
+
+.item:hover
+.ranking {
+  opacity: .3;
+}
+
+.ranking {
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: url("/img/ranking.png") -12px -18px;
+  opacity: 0;
+}
+
+.ranking:hover {
+  opacity: 1 !important;
 }

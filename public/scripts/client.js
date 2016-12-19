@@ -45,7 +45,7 @@ function updateList(){
       for (var i = 0; i < response.length; i++) {
         outputText += '<tr data=' + response[i].id + ' ><td class=" completed-button ';
         if (response[i].completed){outputText += ' completed"';} else { outputText += ' toComplete"';}
-        outputText += ' ></td><td class="item" >'+ response[i].item +'</td><td class="ensureDelete">[ Delete? ]</td><td class="delete-button delete" ></td></tr>';
+        outputText += ' ></td><td class="item" >'+ response[i].item +'<div class="ranking"></div></td><td class="ensureDelete">[ Delete? ]</td><td class="delete-button delete" ></td></tr>';
       }
       outputText += '</table>';
       $('#todoList').html(outputText);
