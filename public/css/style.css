@@ -105,11 +105,11 @@ td {
 }
 
 .item:hover
-.ranking {
+.ranking1 {
   opacity: .3;
 }
 
-.ranking {
+.ranking1 {
   float: right;
   width: 30px;
   height: 30px;
@@ -117,6 +117,50 @@ td {
   opacity: 0;
 }
 
-.ranking:hover {
+.ranking2 {
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: url("/img/ranking.png") -12px -18px;
+  opacity: .3;
+}
+
+.ranking3 {
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: url("/img/ranking.png") -85px -18px;
+  opacity: .3;
+}
+
+.ranking4 {
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: url("/img/ranking.png") -158px -18px;
+  opacity: .3;
+}
+
+
+.rank-button:hover {
   opacity: 1 !important;
+}
+
+#ranking-note {
+  border: 1px solid #eeeeee;
+  margin: 40px auto;
+  max-width: 300px;
+  padding: 1px;
+  zoom: .7;
+}
+
+#ranking-note  p {
+  color: #999999;
+  font-family: lato;
+  font-weight: 300;
+  margin: 20px 0 0 0;
+}
+
+#ranking-note img {
+  opacity: .7;
 }

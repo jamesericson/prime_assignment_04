@@ -43,7 +43,7 @@ app.get('/getList', function(req, res){
       console.log(err);
     } else {
       console.log('connected to DB');
-      var query = client.query( 'SELECT * FROM todolist ORDER BY completed, id' );
+      var query = client.query( 'SELECT * FROM todolist ORDER BY completed, importance DESC, id' );
       //array for list
       var allList = [];
       query.on( 'row', function( row ){
@@ -51,7 +51,7 @@ app.get('/getList', function(req, res){
       });
       query.on( 'end', function(){
       done();
-      console.log( allList);
+      // console.log( allList);
 
       res.send( allList );
       });
@@ -78,6 +78,43 @@ app.post('/updateStatus', function(req, res){
           console.log('it was else... ?');
           client.query( 'UPDATE todolist SET completed=TRUE WHERE id= ' + [req.body.id] + ';' );
         } // end nested if else
+        done();
+        res.send('ok');
+      }); // end query.on
+    }//end if else
+  });// end connect
+});//end post newItem
+
+app.post('/changeRank', function(req, res){
+  console.log('hit changeRank route/ recieved id:', req.body.id);
+  //cont to DB
+  pg.connect( connectionString, function(err, client, done){
+    if( err ){
+      console.log(err);
+    } else {
+      console.log('connected to DB');
+      // use wildcards to insert record
+      var query = client.query( 'SELECT importance FROM todolist WHERE id = ' + [req.body.id] + ';' );
+      query.on('row',  function (row){
+        console.log('this is the what it\'s checking: ', row.importance);
+
+        switch (row.importance) {
+          case 1:
+            console.log('it was equal to 1: now it should be 2');
+            client.query( 'UPDATE todolist SET importance=\'2\' WHERE id = ' + [req.body.id] + ';' );
+            break;
+          case 2:
+            console.log('changing importance to 3');
+            client.query( 'UPDATE todolist SET importance=\'3\' WHERE id = ' + [req.body.id] + ';' );
+            break;
+          case 3:
+            console.log('changing importance to 4');
+            client.query( 'UPDATE todolist SET importance=\'4\' WHERE id = ' + [req.body.id] + ';' );
+            break;
+          default:
+            console.log('changing importance back to 1');
+            client.query( 'UPDATE todolist SET importance=\'1\' WHERE id = ' + [req.body.id] + ';' );
+        }// end switch
         done();
         res.send('ok');
       }); // end query.on
