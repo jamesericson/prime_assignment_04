@@ -136,4 +136,20 @@ app.post('/delete', function(req, res){
       res.send('ok');
     }//end if else
   });// end connect
-});//end post newItem
+});//end post delete
+
+app.post('/editItem', function(req, res){
+  console.log('hit editItem route/ recieved id: ', req.body.id);
+  //cont to DB
+  pg.connect( connectionString, function(err, client, done){
+    if( err ){
+      console.log(err);
+    } else {
+      console.log('connected to DB');
+      // use wildcards to insert record
+      client.query( 'UPDATE todolist SET item=$1 WHERE id=$2', [req.body.item, req.body.id] );
+      done();
+      res.send('ok');
+    }//end if else
+  });// end connect
+});//end post delete

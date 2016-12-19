@@ -9,22 +9,64 @@ function init(){
   updateList();
 
   $('#add-item-button').on('click', addItem);
+  $(document).keypress(function(e){if(e.which == 13){enter();} });
 
   $(document).on('click', '.ensureDelete', deleteItem);
   $(document).on('click', '.rank-button', selectRanking);
+  $(document).on('click', '.editIcon', displayEdit);
 
-  $(document).keypress(function(e){if(e.which == 13){addItem();} });
   $(document).on('click', '.completed-button', changeComplete);
   $(document).on('click', '.delete-button', askDelete)
 } // end init()
 
+function displayEdit() {
+  $('.edit-input').slideDown();
+  $('#edit-item').attr('data', $(this).parent().parent().attr('data') );
+  $('#edit-item').val($(this).parent().text() );
+} // displayEdit()
+
 function editItem() {
+  console.log('this should be tableID', $('#edit-item').attr('data') );
+  console.log('in editItem', $('#edit-item').val() );
+
+  $.ajax({
+    type: 'POST',
+    url: '/editItem',
+    data: send = {
+        id: $('#edit-item').attr('data'),
+        item:  $('#edit-item').val()
+      },
+    success: (function(response){
+      console.log('back from server', response);
+      updateList();
+    }),
+    error: (function(err){
+      console.log(err);
+    })
+  });//end ajax
+  $('#edit-item').val('');
 
 }// end editItem()
 
+function enter(){
+  var addVal = $('#add-item').val();
+  var editVal =  $('#edit-item').val();
+
+  console.log("ENTER: edit-item = '" + editVal + "' and add-item = '" + addVal + "'");
+
+  if (addVal !== ''){
+    addItem()
+  } else if (editVal !== ''){
+    editItem();
+    $('.edit-input').slideUp();
+  } else {
+    return;
+  }// end if else
+
+} // end enter()
+
 function selectRanking() {
-  var here = $(this).parent().parent().attr('data')
-  console.log('in selectRanking, here:', here);
+  console.log('in selectRanking, here:', $(this).parent().parent().attr('data') );
   $.ajax({
     type: 'POST',
     url: '/changeRank',
@@ -43,8 +85,7 @@ function selectRanking() {
 }// end selectRanking()
 
 function addItem(){
-  console.log('add Item');
-  if( $('#add-item').val() == ''){console.log('nothing there');return;}
+  console.log('add Item');if( $('#add-item').val() == ''){console.log('nothing there');return;}
 
   $.ajax({
     type: 'POST',
@@ -115,8 +156,7 @@ function askDelete(){
   $(document).one('click', function(){
     $('.delete').addClass('delete-button')
     $(address).parent().find('.ensureDelete').slideToggle();
-
-    });
+  }); //end one click
 }// end askDelete()
 
 function deleteItem(){
