@@ -5,7 +5,9 @@ $(document).ready(function(){
 });
 
 function init(){
+  $('.edit-input').hide();
   updateList();
+
   $('#add-item-button').on('click', addItem);
 
   $(document).on('click', '.ensureDelete', deleteItem);
@@ -15,6 +17,10 @@ function init(){
   $(document).on('click', '.completed-button', changeComplete);
   $(document).on('click', '.delete-button', askDelete)
 } // end init()
+
+function editItem() {
+
+}// end editItem()
 
 function selectRanking() {
   var here = $(this).parent().parent().attr('data')
@@ -38,6 +44,8 @@ function selectRanking() {
 
 function addItem(){
   console.log('add Item');
+  if( $('#add-item').val() == ''){console.log('nothing there');return;}
+
   $.ajax({
     type: 'POST',
     url: '/newItem',
@@ -66,7 +74,7 @@ function updateList(){
       for (var i = 0; i < response.length; i++) {
         outputText += '<tr data=' + response[i].id + ' ><td class=" completed-button ';
         if (response[i].completed){outputText += ' completed"';} else { outputText += ' toComplete"';}
-        outputText += ' ></td><td class="item" >'+ response[i].item +'<div class="rank-button ranking'+ response[i].importance +'"></div></td><td class="ensureDelete">[ Delete? ]</td><td class="delete-button delete" ></td></tr>';
+        outputText += ' ></td><td class="item" ><div class="editIcon"></div>'+ response[i].item +'<div class="rank-button ranking'+ response[i].importance +'"></div></td><td class="ensureDelete">[ Delete? ]</td><td class="delete-button delete" ></td></tr>';
       }
       outputText += '</table>';
       $('#todoList').html(outputText);
