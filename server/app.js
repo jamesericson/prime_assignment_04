@@ -6,7 +6,7 @@ var pg = require('pg');
 
 var app = express();
 var port = process.env.PORT || 3001;
-var connectionString = 'postgres://localhost:5432/Todo';
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/Todo';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
